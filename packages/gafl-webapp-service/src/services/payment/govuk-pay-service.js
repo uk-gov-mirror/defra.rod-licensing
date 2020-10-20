@@ -107,3 +107,15 @@ export const getPaymentStatus = async paymentId => {
     }
   }
 }
+
+export const cancelPayment = async paymentId => {
+  debug(`Cancel payment id: ${paymentId}`)
+  let response
+  try {
+    response = await govUkPayApi.cancelPayment(paymentId)
+  } catch (err) {
+    throw Boom.badImplementation('Unexpected response from GOV.UK pay API')
+  }
+
+  return response.ok
+}

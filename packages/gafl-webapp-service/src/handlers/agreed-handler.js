@@ -13,7 +13,7 @@ import Boom from '@hapi/boom'
 import db from 'debug'
 import { salesApi } from '@defra-fish/connectors-lib'
 import { prepareApiTransactionPayload, prepareApiFinalisationPayload } from '../processors/api-transaction.js'
-import { sendPayment, getPaymentStatus } from '../services/payment/govuk-pay-service.js'
+import { sendPayment, getPaymentStatus, cancelPayment } from '../services/payment/govuk-pay-service.js'
 import { preparePayment } from '../processors/payment.js'
 import { COMPLETION_STATUS } from '../constants.js'
 import { ORDER_COMPLETE, PAYMENT_CANCELLED, PAYMENT_FAILED } from '../uri.js'
@@ -120,8 +120,21 @@ const processPayment = async (request, transaction, status) => {
    */
   const { state } = await getPaymentStatus(transaction.payment.payment_id)
 
+  /**
+   * If it is attempted to run the agreed handler with an incomplete payment then cancel the payment.
+   * This is -
+   * (a) the back-button out of the service or
+   * (b) The service being opened in a secondary tab
+   */
   if (!state.finished) {
-    throw Boom.forbidden('Attempt to access the agreed handler during payment journey')
+    if (await cancelPayment(transaction.payment.payment_id)) {
+      await salesApi.updatePaymentJournal(transaction.id, { paymentStatus: PAYMENT_JOURNAL_STATUS_CODES.Cancelled })
+      status[COMPLETION_STATUS.paymentCancelled] = true
+      await request.cache().helpers.status.set(status)
+      return PAYMENT_CANCELLED.uri
+    } else {
+      throw Boom.badImplementation('Error accessing the GOV.UK pay API')
+    }
   }
 
   let next = null
@@ -158,7 +171,7 @@ const processPayment = async (request, transaction, status) => {
     }
 
     // The user cancelled the payment
-    if (state.code === GOVUK_PAY_ERROR_STATUS_CODES.USER_CANCELLED) {
+    if ([GOVUK_PAY_ERROR_STATUS_CODES.USER_CANCELLED, GOVUK_PAY_ERROR_STATUS_CODES.SYSTEM_CANCELLED].includes(state.code)) {
       await salesApi.updatePaymentJournal(transaction.id, { paymentStatus: PAYMENT_JOURNAL_STATUS_CODES.Cancelled })
       status[COMPLETION_STATUS.paymentCancelled] = true
       status.pay = { code: state.code }
@@ -192,6 +205,11 @@ export default async (request, h) => {
   // If the agreed flag is not set to true then throw an exception
   if (!status[COMPLETION_STATUS.agreed]) {
     throw Boom.forbidden(`Attempt to access the agreed handler with no agreed flag set: ${JSON.stringify(transaction)}`)
+  }
+
+  // If the cancelled flag is set to true then throw an exception
+  if (status[COMPLETION_STATUS.paymentCancelled]) {
+    throw Boom.forbidden(`Attempt to access the agreed handler with cancelled payment: ${JSON.stringify(transaction)}`)
   }
 
   // Send the transaction to the sales API and process the response

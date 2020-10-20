@@ -64,3 +64,21 @@ export const fetchPaymentEvents = async paymentId => {
     throw err
   }
 }
+
+/**
+ * Cancel a payment for a given paymentId
+ * @param paymentId
+ * @returns {Promise<unknown>}
+ */
+export const cancelPayment = async paymentId => {
+  try {
+    return fetch(`${process.env.GOV_PAY_API_URL}/${paymentId}/cancel`, {
+      headers: headers(),
+      method: 'post',
+      timeout: process.env.GOV_PAY_REQUEST_TIMEOUT_MS || GOV_PAY_REQUEST_TIMEOUT_MS_DEFAULT
+    })
+  } catch (err) {
+    console.error(`Error cancelling a payment from the GOV.UK API service - paymentId: ${paymentId}`, err)
+    throw err
+  }
+}
