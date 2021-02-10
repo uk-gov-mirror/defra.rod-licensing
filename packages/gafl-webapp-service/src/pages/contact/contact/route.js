@@ -26,6 +26,7 @@ const getData = async request => {
   }
 
   return {
+    licenceOption: permission.licenceOption,
     licensee: permission.licensee,
     isPhysical: isPhysical(permission),
     isJunior: hasJunior(permission),

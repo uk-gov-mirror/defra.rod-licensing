@@ -14,6 +14,8 @@ import name from '../pages/contact/name/route.js'
 import addressLookup from '../pages/contact/address/lookup/route.js'
 import addressSelect from '../pages/contact/address/select/route.js'
 import addressEntry from '../pages/contact/address/entry/route.js'
+import licenceOption from '../pages/contact/digital-licence/licence-option/route.js'
+import licenceBy from '../pages/contact/digital-licence/licence-by/route.js'
 import contact from '../pages/contact/contact/route.js'
 import newsletter from '../pages/contact/newsletter/route.js'
 
@@ -45,6 +47,8 @@ const routes = [
   ...addressLookup,
   ...addressSelect,
   ...addressEntry,
+  ...licenceOption,
+  ...licenceBy,
   ...contact,
   ...newsletter,
   ...contactSummary,

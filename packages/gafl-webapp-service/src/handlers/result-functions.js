@@ -8,6 +8,7 @@ import {
   LICENCE_LENGTH,
   LICENCE_TYPE,
   LICENCE_START_TIME,
+  DIGITAL_LICENCE_OPTION,
   ADDRESS_LOOKUP,
   ADDRESS_SELECT,
   ADDRESS_ENTRY,
@@ -22,6 +23,7 @@ import disabilityConcession from '../pages/concessions/disability/result-functio
 import licenceType from '../pages/licence-details/licence-type/result-function.js'
 import licenceLength from '../pages/licence-details/licence-length/result-function.js'
 import licenceStartTime from '../pages/licence-details/licence-start-time/result-function.js'
+import licenceOption from '../pages/contact/digital-licence/licence-option/result-function.js'
 import contact from '../pages/contact/contact/result-function.js'
 import name from '../pages/contact/name/result-function.js'
 import addressLookup from '../pages/contact/address/lookup/result-function.js'
@@ -42,6 +44,7 @@ export default {
   [ADDRESS_LOOKUP.page]: addressLookup,
   [ADDRESS_ENTRY.page]: addressEntry,
   [ADDRESS_SELECT.page]: addressSelect,
+  [DIGITAL_LICENCE_OPTION.page]: licenceOption,
   [CONTACT.page]: contact,
   [NAME.page]: name,
   [LICENCE_SUMMARY.page]: licenceSummary

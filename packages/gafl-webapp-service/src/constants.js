@@ -1,6 +1,7 @@
 /**
  * System constants and defaults
  */
+export const allowsPhysicalLicence = { YES: 'yes', NO: 'no' }
 export const ADDRESS_LOOKUP_SERVICE = { lang: 'EN', dataset: 'DPA' }
 export const ADDRESS_LOOKUP_TIMEOUT_MS_DEFAULT = 10000
 export const ATTRIBUTION_REDIRECT_DEFAULT = '/'

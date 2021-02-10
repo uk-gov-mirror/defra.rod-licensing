@@ -108,7 +108,38 @@
             <p class="govuk-body-m">You will need to confirm your licence number if asked by an enforcement officer.</p>
         {% endif %}
     {% endif %}
-
+    {% if data.licenceOption == 'Digital' %}
+    {{ govukRadios({
+      idPrefix: "how-contacted",
+      name: "how-contacted",
+      errorMessage: { text: errorMsg } if error['how-contacted'],
+      fieldset: {
+        legend: {
+          text: selectText,
+          isPageHeading: false,
+          classes: "govuk-body-m"
+        }
+      },
+      items: [
+        {
+          value: "email",
+          text: "Email",
+          checked: payload['how-contacted'] === 'email',
+          conditional: {
+            html: emailHtml
+          }
+        },
+        {
+          value: "text",
+          text: "Text message",
+          checked: payload['how-contacted'] === 'text',
+          conditional: {
+            html: textMessageHtml
+          }
+        }
+      ]
+    }) }}
+    {% else %}
     {{ govukRadios({
       idPrefix: "how-contacted",
       name: "how-contacted",
@@ -147,6 +178,8 @@
         }
       ]
     }) }}
+
+    {% endif %}
 
 {% endblock %}
 

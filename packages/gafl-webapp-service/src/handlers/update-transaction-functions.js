@@ -16,6 +16,8 @@ import addressSelect from '../pages/contact/address/select/update-transaction.js
 import addressEntry from '../pages/contact/address/entry/update-transaction.js'
 import contact from '../pages/contact/contact/update-transaction.js'
 import newsletter from '../pages/contact/newsletter/update-transaction.js'
+import licenceBy from '../pages/contact/digital-licence/licence-by/update-transactions.js'
+import licenceOption from '../pages/contact/digital-licence/licence-option/update-transactions.js'
 
 import paymentCancelled from '../pages/payment/cancelled/update-transaction.js'
 import paymentFailed from '../pages/payment/failed/update-transaction.js'
@@ -34,6 +36,8 @@ import {
   ADDRESS_LOOKUP,
   ADDRESS_SELECT,
   ADDRESS_ENTRY,
+  DIGITAL_LICENCE_BY,
+  DIGITAL_LICENCE_OPTION,
   CONTACT,
   NEWSLETTER,
   TERMS_AND_CONDITIONS,
@@ -53,6 +57,8 @@ export default {
   [ADDRESS_SELECT.page]: addressSelect,
   [ADDRESS_ENTRY.page]: addressEntry,
   [NAME.page]: name,
+  [DIGITAL_LICENCE_OPTION.page]: licenceOption,
+  [DIGITAL_LICENCE_BY.page]: licenceBy,
   [CONTACT.page]: contact,
   [NEWSLETTER.page]: newsletter,
   [TERMS_AND_CONDITIONS.page]: termsAndConditions,

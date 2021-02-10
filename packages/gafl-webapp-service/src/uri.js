@@ -17,6 +17,9 @@ export const ADDRESS_ENTRY = { uri: '/buy/address', page: 'address-entry' }
 export const CONTACT = { uri: '/buy/contact', page: 'contact' }
 export const NEWSLETTER = { uri: '/buy/newsletter', page: 'newsletter' }
 
+export const DIGITAL_LICENCE_OPTION = {uri: '/buy/licence-option', page: 'licence-option'}
+export const DIGITAL_LICENCE_BY = {uri: '/buy/licence-by', page: 'licence-by'}
+
 export const CONTACT_SUMMARY = { uri: '/buy/contact-summary', page: 'contact-summary' }
 export const LICENCE_SUMMARY = { uri: '/buy/licence-summary', page: 'licence-summary' }
 
