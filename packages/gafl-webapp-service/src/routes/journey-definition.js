@@ -153,6 +153,9 @@ export default [
       },
       [CommonResults.SUMMARY]: {
         page: CONTACT_SUMMARY
+      },
+      [allowsPhysicalLicence.YES]: {
+        page: LICENCE_FULFILMENT
       }
     }
   },
